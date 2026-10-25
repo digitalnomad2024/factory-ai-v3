@@ -1,0 +1,15 @@
+name: Keep Streamlit App Awake
+
+on:
+  schedule:
+    # Runs every hour on the hour
+    - cron: "0 * * * *"
+  workflow_dispatch:  # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Streamlit App
+        run: |
+          curl -s -o /dev/null -w "Pinged app at $(date -u +'%Y-%m-%d %H:%M:%S UTC'). Status code: %{http_code}\n" https://factory-ai-v3.streamlit.app
